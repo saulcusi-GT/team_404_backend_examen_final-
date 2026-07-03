@@ -1,8 +1,10 @@
 package com.turismo.api.exception;
 
 import com.turismo.api.common.ApiResponse;
+import jakarta.persistence.NonUniqueResultException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -26,6 +28,13 @@ public class GlobalExceptionHandler {
 				.map(error -> error.getField() + ": " + error.getDefaultMessage())
 				.orElse("Datos invalidos");
 		return ResponseEntity.badRequest().body(ApiResponse.error(message));
+	}
+
+	@ExceptionHandler({IncorrectResultSizeDataAccessException.class, NonUniqueResultException.class})
+	public ResponseEntity<ApiResponse<Void>> handleNonUniqueResult(Exception ex) {
+		log.error("Database query returned more than one result where a single result was expected", ex);
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(ApiResponse.error("Error de datos duplicados en el servidor"));
 	}
 
 	@ExceptionHandler(Exception.class)

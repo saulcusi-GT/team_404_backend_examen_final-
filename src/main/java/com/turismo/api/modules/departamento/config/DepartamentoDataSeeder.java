@@ -3,11 +3,17 @@ package com.turismo.api.modules.departamento.config;
 import com.turismo.api.modules.departamento.entity.Atractivo;
 import com.turismo.api.modules.departamento.entity.DepartamentoInfo;
 import com.turismo.api.modules.departamento.repository.DepartamentoInfoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class DepartamentoDataSeeder implements CommandLineRunner {
+
+	private static final Logger log = LoggerFactory.getLogger(DepartamentoDataSeeder.class);
 
 	private final DepartamentoInfoRepository departamentoInfoRepository;
 
@@ -17,7 +23,9 @@ public class DepartamentoDataSeeder implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		if (departamentoInfoRepository.count() > 0) {
+		List<DepartamentoInfo> departamentos = departamentoInfoRepository.findAllByOrderByIdAsc();
+		if (!departamentos.isEmpty()) {
+			eliminarDuplicados(departamentos);
 			return;
 		}
 
@@ -78,5 +86,16 @@ public class DepartamentoDataSeeder implements CommandLineRunner {
 				.build());
 
 		departamentoInfoRepository.save(departamento);
+	}
+
+	private void eliminarDuplicados(List<DepartamentoInfo> departamentos) {
+		if (departamentos.size() <= 1) {
+			return;
+		}
+
+		List<DepartamentoInfo> duplicados = departamentos.subList(1, departamentos.size());
+		log.warn("Se encontraron {} registros duplicados en departamento_info. Se conserva id={} y se eliminan los restantes.",
+				duplicados.size(), departamentos.get(0).getId());
+		departamentoInfoRepository.deleteAll(duplicados);
 	}
 }

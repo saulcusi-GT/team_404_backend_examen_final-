@@ -4,6 +4,7 @@ import com.turismo.api.exception.ResourceNotFoundException;
 import com.turismo.api.modules.hero.entity.HeroSeccion;
 import com.turismo.api.modules.hero.repository.HeroSeccionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,8 @@ public class HeroSeccionService {
 
 	@Transactional(readOnly = true)
 	public HeroSeccion obtenerPrincipal() {
-		return heroSeccionRepository.findFirstByOrderByIdAsc()
+		return heroSeccionRepository.findByOrderByIdAsc(PageRequest.of(0, 1)).stream()
+				.findFirst()
 				.orElseThrow(() -> new ResourceNotFoundException("Aun no hay una seccion hero cargada"));
 	}
 

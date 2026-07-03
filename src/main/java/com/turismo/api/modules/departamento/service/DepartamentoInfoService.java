@@ -5,6 +5,7 @@ import com.turismo.api.modules.departamento.entity.Atractivo;
 import com.turismo.api.modules.departamento.entity.DepartamentoInfo;
 import com.turismo.api.modules.departamento.repository.DepartamentoInfoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +31,10 @@ public class DepartamentoInfoService {
 
 	@Transactional(readOnly = true)
 	public DepartamentoInfo obtenerPrincipal() {
-		return departamentoInfoRepository.findFirstByOrderByIdAsc()
+		Long principalId = departamentoInfoRepository.findPrincipalIds(PageRequest.of(0, 1)).stream()
+				.findFirst()
 				.orElseThrow(() -> new ResourceNotFoundException("Aun no hay informacion de departamento cargada"));
+		return buscarPorId(principalId);
 	}
 
 	public DepartamentoInfo crear(DepartamentoInfo departamento) {
