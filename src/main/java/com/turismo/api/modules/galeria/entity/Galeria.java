@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Modulo Galeria: el integrante asignado debe trabajar solo dentro de modules/galeria.
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,13 +19,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "galeria")
 public class Galeria {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank
-	private String titulo;
+    @NotBlank(message = "El título es obligatorio")
+    private String titulo;
 
-	private String imagenUrl;
-	private String descripcion;
+    @NotBlank(message = "La URL de la imagen es obligatoria")
+    private String imagenUrl;
+
+    private String descripcion;
 }
