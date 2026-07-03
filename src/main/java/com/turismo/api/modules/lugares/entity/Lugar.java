@@ -11,7 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Modulo Lugares: el integrante asignado debe trabajar solo dentro de modules/lugares.
+// Módulo Lugares: el integrante asignado debe trabajar solo dentro de modules/lugares.
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,15 +20,22 @@ import lombok.NoArgsConstructor;
 @Table(name = "lugares")
 public class Lugar {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank
-	private String nombre;
+    @NotBlank(message = "El nombre es obligatorio")
+    private String nombre;
 
-	private String descripcion;
-	private String ubicacion;
-	private String imagenUrl;
-	private String categoria;
+    @NotBlank(message = "La descripción es obligatoria")
+    private String descripcion;
+
+    @NotBlank(message = "La ubicación es obligatoria")
+    private String ubicacion;
+
+    private String imagenUrl;
+
+    @NotBlank(message = "La categoría es obligatoria")
+    private String categoria;
+
 }
