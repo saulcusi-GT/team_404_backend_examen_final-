@@ -1,0 +1,9 @@
+.gradle
+build
+.idea
+*.iml
+.git
+.gitignore
+HELP.md
+README.md
+team404-turismo-backend
