@@ -29,13 +29,16 @@ public class GastronomiaService {
 		return gastronomiaRepository.save(gastronomia);
 	}
 
-	public Gastronomia actualizar(Long id, Gastronomia datos) {
-		Gastronomia gastronomia = buscarPorId(id);
-		gastronomia.setNombre(datos.getNombre());
-		gastronomia.setDescripcion(datos.getDescripcion());
-		gastronomia.setImagenUrl(datos.getImagenUrl());
-		return gastronomiaRepository.save(gastronomia);
-	}
+public Gastronomia actualizar(Long id, Gastronomia datos) {
+    Gastronomia gastronomia = buscarPorId(id);
+
+    gastronomia.setNombre(datos.getNombre());
+    gastronomia.setDescripcion(datos.getDescripcion());
+    gastronomia.setImagenUrl(datos.getImagenUrl());
+    gastronomia.setPrecioReferencial(datos.getPrecioReferencial());
+
+    return gastronomiaRepository.save(gastronomia);
+}
 
 	public void eliminar(Long id) {
 		Gastronomia gastronomia = buscarPorId(id);

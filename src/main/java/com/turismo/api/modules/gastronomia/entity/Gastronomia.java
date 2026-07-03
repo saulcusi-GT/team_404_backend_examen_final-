@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Modulo Gastronomia: el integrante asignado debe trabajar solo dentro de modules/gastronomia.
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,13 +19,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "gastronomia")
 public class Gastronomia {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank
-	private String nombre;
+    @NotBlank
+    private String nombre;
 
-	private String descripcion;
-	private String imagenUrl;
+    private String descripcion;
+
+    private String imagenUrl;
+
+    private Double precioReferencial;
 }
