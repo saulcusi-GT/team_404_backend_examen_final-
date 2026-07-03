@@ -35,6 +35,26 @@ Swagger:
 http://localhost:8080/swagger-ui/index.html
 ```
 
+## Despliegue en Render
+
+El proyecto incluye `Dockerfile` y esta listo para desplegar como Web Service con entorno Docker.
+
+Variables aceptadas:
+
+```text
+DB_URL=jdbc:postgresql://host:puerto/database
+DB_USERNAME=usuario
+DB_PASSWORD=password
+```
+
+Tambien es compatible con la variable `DATABASE_URL` de Render:
+
+```text
+DATABASE_URL=postgres://usuario:password@host:puerto/database
+```
+
+Si usas `DATABASE_URL`, el backend la convierte automaticamente a formato JDBC.
+
 ## Endpoints
 
 - `GET /api/lugares`
